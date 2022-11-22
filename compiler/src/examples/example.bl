@@ -1,0 +1,29 @@
+;comment
+
+byte b = 8
+word w = 16
+dword d = 32
+qword q = 64
+
+byte[12] a = "Hello World", 0
+
+if b == 8
+	
+elseif b == 9
+	
+else
+	
+endif
+
+while b < 16
+	
+endwhile
+
+func examplefunc(byte n)
+	
+endfunc
+
+object exampleobj(byte i, word j)
+
+exampleobj obj(1, 2)
+obj:i = 0

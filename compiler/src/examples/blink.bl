@@ -1,0 +1,46 @@
+%define BCM2837_GPFSEL2 0x3F200008
+%define BCM2837_GPSET0  0x3F20001C
+%define BCM2837_GPCLR0 0x3F2000028
+
+.asm{
+	.section ".text.boot"
+
+	.global _start	
+
+	_start:
+		ldr r3, =main
+		blx r3
+
+	halt:
+		wfe
+		b halt
+}
+
+func write32(*dst, dword val)
+	dst* = val
+endfunc
+
+func read32(*src) endfunc src*
+
+func delay(qword ticks)
+	qword i
+	while i < ticks
+		i++
+	endwhile
+endfunc
+
+func main()
+	dword gpfsel2 = read32(BCM2837_GPFSEL2)
+	gpfsel2 |= (1<<3)
+	write(BCM2837_GPFSEL2, gpfsel2)
+	
+	dword i
+
+	while 1
+		write(BCM2837_GPFSET0, 1<<21)
+		delay(1000000)
+		write(BCM2837_GPCLR0, 1<<21)
+		delay(1000000)
+	endwhile
+
+endfunc
